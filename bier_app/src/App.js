@@ -1,15 +1,15 @@
 import { useCallback, useRef, useState } from 'react';
 import './App.css';
-
 import {
   GoogleMap, 
   useLoadScript,
   Marker,
   infoWindow,
+  InfoWindow,
 } from "@react-google-maps/api";
 import { formatRelative } from "date-fns";
 import mapStyles from './mapStyles';
-// import "reach/combobox/styles.css";
+import Search from './components/UI/Search/Search';
 
 const libraries = ['places'];
 
@@ -60,6 +60,7 @@ function App() {
   return (
     <>
       <h1 className='h1'>Beer{" "}<span role="img" aria-label='tent'>🍺</span></h1>
+      <Search />
       <GoogleMap 
         mapContainerStyle={mapContainerStyle}
         zoom={11}
@@ -83,9 +84,22 @@ function App() {
           setSelected(marker);
         }}
       />)}
+      {/* inofwindow is a componet that pops out */}
+       {selected ? (<InfoWindow 
+         position={{lat: selected.lat, lng: selected.lng}} 
+         onCloseClick={() => {
+         setSelected(null)
+       }}> 
+        <div>
+          <h3>Meetup place</h3>
+          <p>Time selected place: {formatRelative(selected.time, new Date())}</p>
+        </div>
+       </InfoWindow>) : null }
       </GoogleMap>
+
     </>
   );
 }
+
 
 export default App;
