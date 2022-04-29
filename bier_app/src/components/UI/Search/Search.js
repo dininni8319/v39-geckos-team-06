@@ -1,5 +1,7 @@
+import React from 'react';
 import usePlacesAutocomplete from "use-places-autocomplete";
 import './Search.css';
+import Overlay from './Overlay';
 
 const Search = (props) => {
 
@@ -18,16 +20,17 @@ const Search = (props) => {
 
     return (
         <section className="search">
-            <section onSelect={(address) => {
-                console.log(address)
-                }}
-            >
-                <input value={value} onChange={(e) => {
-                    setValue(e.target.value)
+            <section>
+                <input 
+                    className='mb-5'
+                    value={value} 
+                    onChange={(e) => {
+                      setValue(e.target.value)
                     }}
                     disabled={!ready}
                     placeholder="Search for a Place"
                 />
+                <Overlay data={data}></Overlay>
             </section>
         </section>
     );
