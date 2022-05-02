@@ -34,7 +34,7 @@ const Map = () => {
   const center = {
     lat: location.coordinates.lat,
     lng: location.coordinates.lng
-  }
+  };
 
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: api_key,
@@ -76,6 +76,19 @@ const Map = () => {
         onClick={onMapClick}
         onLoad={onMapLoad}
       >
+        <Marker 
+           position={center} 
+           icon={
+            {
+              url: 'location.jpeg',
+              scaledSize: new window.google.maps.Size(30, 30),
+              origin: new window.google.maps.Point(0,0),
+              anchor: new window.google.maps.Point(15, 15)
+            }
+          }
+        />
+      
+
       {markers.map(marker => <Marker 
         key={marker.time.toISOString()} 
         position={{lat: marker.lat, lng: marker.lng}} 
@@ -91,6 +104,7 @@ const Map = () => {
           setSelected(marker);
         }}
       />)}
+      
       {/* inofwindow is a component that pops out */}
        {selected ? (<InfoWindow 
          position={{lat: selected.lat, lng: selected.lng}} 
