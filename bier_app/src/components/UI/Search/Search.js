@@ -33,7 +33,7 @@ const Search = ({ mapRef }) => {
                 <Suggestions 
                     data={data}
                     mapRef={mapRef}
-                    setValue={setValue}
+                    clearSuggestions={clearSuggestions}
                 />
             </section>
         </section>

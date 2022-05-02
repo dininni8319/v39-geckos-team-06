@@ -21,7 +21,6 @@ const PopOver = ( { data, handleSelect, handleShow, target }) => {
                                 ref={target}
                                 onClick={() => {
                                     handleSelect(place_id, description)
-                                
                                 }}
 
                                 key={id}     

@@ -1,11 +1,11 @@
 import { set } from 'date-fns';
 import { useCallback, useRef, useState } from 'react';
 import { Overlay, OverlayTrigger} from 'react-bootstrap';
-import { getGeocode, getLatLng, usePlacesAutocomplete } from 'use-places-autocomplete';
+import { getGeocode, getLatLng, usePlacesAutocomplete, clearSuggestions,  } from 'use-places-autocomplete';
 import PopOver from '../PopOver/PopOver';
 import './Search.css';
 
-const Suggestions = ({ data, mapRef, setValue}) => {
+const Suggestions = ({ data, mapRef, clearSuggestions}) => {
     const [ selected, setSelected ] = useState([]);
     const target = useRef(null);
     
@@ -22,12 +22,13 @@ const Suggestions = ({ data, mapRef, setValue}) => {
             .then(results => getLatLng(results[0]))
             .then(({ lat, lng }) => {
                 panFunction(lat, lng);
+                clearSuggestions(null)
             })
             .catch(error => {
                 console.log("error:", error);
             })
             setShow(!show)
-            setValue('')
+            
     }
 
     const panFunction = useCallback(( lat, lng) => {
@@ -41,7 +42,6 @@ const Suggestions = ({ data, mapRef, setValue}) => {
             placement='bottom-end'
             target={target.current}
             onHide={() => setShow(false)}
-
             overlay={
                 <></>
             }
