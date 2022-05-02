@@ -1,6 +1,5 @@
 import { useCallback, useRef, useState, useEffect } from 'react';
 import '../../../App.css';
-
 import {
   GoogleMap, 
   useLoadScript,
@@ -11,6 +10,7 @@ import {
 import { formatRelative } from "date-fns";
 import mapStyles from './mapStyles';
 import Search from '../Search/Search';
+import useGeolocation from '../../Hooks/useGeolocation';
 
 const libraries = ['places'];
 
@@ -20,25 +20,27 @@ const mapContainerStyle = {
   borderRadius: '5px',
 }
 
-const center = {
-  lat: 40.7128,
-  lng: -74.0060
-}
-
 const options = {
   styles: mapStyles,
   disableDefaultUI: true,
-  zoomControll: true
+  zoomControll: true,
 }
 
 let api_key = process.env.REACT_APP_API_GOOGLE_MAPS_API_KEY;
 
 const Map = () => {
+  const location = useGeolocation();
+
+  const center = {
+    lat: location.coordinates.lat,
+    lng: location.coordinates.lng
+  }
+
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: api_key,
     libraries,
   })
-
+  
   const [ markers, setMarkers ] = useState([]);
   const [ selected, setSelected ] = useState(null);
 
@@ -68,7 +70,7 @@ const Map = () => {
       />
       <GoogleMap 
         mapContainerStyle={mapContainerStyle}
-        zoom={11}
+        zoom={13}
         center={center}
         options={options}
         onClick={onMapClick}

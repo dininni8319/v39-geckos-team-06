@@ -14,7 +14,7 @@ const Search = ({ mapRef }) => {
     } = usePlacesAutocomplete({
         requestOptions: {
             location: {lat:() => 40.7128, lng: () => -74.0060},
-            radius: 200 * 1000,
+            radius: 2 * 50,
         }
     });
 

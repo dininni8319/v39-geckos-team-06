@@ -6,6 +6,7 @@ import PopOver from '../PopOver/PopOver';
 import './Search.css';
 
 const Suggestions = ({ data, mapRef, clearSuggestions}) => {
+
     const [ selected, setSelected ] = useState([]);
     const target = useRef(null);
     
