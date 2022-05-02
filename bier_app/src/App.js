@@ -1,5 +1,6 @@
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useRef, useState, useEffect } from 'react';
 import './App.css';
+
 import {
   GoogleMap, 
   useLoadScript,
@@ -38,9 +39,11 @@ function App() {
     libraries,
   })
 
-  const [ markers, setMarkers] = useState([]);
+  const [ markers, setMarkers ] = useState([]);
   const [ selected, setSelected ] = useState(null);
+
   const onMapClick = useCallback((event) => {
+
     setMarkers(current => [...current, {
       lat: event.latLng.lat(),
       lng: event.latLng.lng(),
@@ -60,7 +63,9 @@ function App() {
   return (
     <>
       <h1 className='h1'>Beer{" "}<span role="img" aria-label='tent'>🍺</span></h1>
-      <Search />
+      <Search 
+        mapRef={mapRef}
+      />
       <GoogleMap 
         mapContainerStyle={mapContainerStyle}
         zoom={11}
@@ -84,7 +89,7 @@ function App() {
           setSelected(marker);
         }}
       />)}
-      {/* inofwindow is a componet that pops out */}
+      {/* inofwindow is a component that pops out */}
        {selected ? (<InfoWindow 
          position={{lat: selected.lat, lng: selected.lng}} 
          onCloseClick={() => {

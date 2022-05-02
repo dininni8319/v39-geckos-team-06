@@ -1,54 +1,59 @@
-import { useState } from 'react';
-import { OverlayTrigger, Popover} from 'react-bootstrap';
+import { set } from 'date-fns';
+import { useCallback, useRef, useState } from 'react';
+import { Overlay, OverlayTrigger} from 'react-bootstrap';
+import { getGeocode, getLatLng, usePlacesAutocomplete } from 'use-places-autocomplete';
+import PopOver from '../PopOver/PopOver';
 import './Search.css';
 
-const Overlay = ({ data }) => {
+const Suggestions = ({ data, mapRef, setValue}) => {
     const [ selected, setSelected ] = useState([]);
-    const [ show, setShow ] = useState(false);
-    console.log(selected);
+    const target = useRef(null);
     
-    // const Close = () => {
-    //     setShow(!show)
-    // }
+    const [ show, setShow ] = useState(true);
+
+    const handleShow = (event) => {
+        setShow(!show)
+    }
+
+    const handleSelect = (id, description) =>{
+        let searched = data.filter(el => el.place_id  === id)
+        setSelected(searched)
+        getGeocode({ address: description })
+            .then(results => getLatLng(results[0]))
+            .then(({ lat, lng }) => {
+                panFunction(lat, lng);
+            })
+            .catch(error => {
+                console.log("error:", error);
+            })
+            setShow(!show)
+            setValue('')
+    }
+
+    const panFunction = useCallback(( lat, lng) => {
+        mapRef.current.panTo({ lat, lng})
+        mapRef.current.setZoom(14)
+    })
 
     return ( 
         <OverlayTrigger
-            placement='bottom-end'
             show={show}
+            placement='bottom-end'
+            target={target.current}
+            onHide={() => setShow(false)}
+
             overlay={
                 <></>
             }
         >
-            <Popover id={`Popover-positioned-bottom`} style={
-                {
-                    position: 'absolute',
-                    marginTop: '56px',
-                }
-            }>
-
-                <section
-                    style={{
-                        width: '25rem',
-                        backgroundColor: 'white',
-                    }}
-                    >
-                        { data?.map(({id, description}) => 
-                            <option 
-                                    onClick={() => setSelected(description)}
-                                    key={id}     
-                                    value={description}
-                                    style={{
-                                      paddingTop: '10px',
-                                    }}
-                            >
-                              {description.slice(0,50)}
-                            </option>
-        
-                        )}
-                </section>
-            </Popover>
+            <PopOver 
+                data={data}
+                handleSelect={handleSelect}
+                handleShow={handleShow}
+                target={target}
+            />   
         </OverlayTrigger>  
      );
 }
  
-export default Overlay;
+export default Suggestions;

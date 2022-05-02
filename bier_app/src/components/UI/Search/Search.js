@@ -1,9 +1,9 @@
 import React from 'react';
 import usePlacesAutocomplete from "use-places-autocomplete";
 import './Search.css';
-import Overlay from './Overlay';
+import Suggestions from './Overlay';
 
-const Search = (props) => {
+const Search = ({ mapRef }) => {
 
     const {
         ready, 
@@ -30,7 +30,11 @@ const Search = (props) => {
                     disabled={!ready}
                     placeholder="Search for a Place"
                 />
-                <Overlay data={data}></Overlay>
+                <Suggestions 
+                    data={data}
+                    mapRef={mapRef}
+                    setValue={setValue}
+                />
             </section>
         </section>
     );
