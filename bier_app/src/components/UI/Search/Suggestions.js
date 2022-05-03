@@ -13,7 +13,7 @@ import './Search.css';
 
 const Suggestions = ({ data, mapRef, selected , setSelected, clearSuggestions }) => {
     const [coordinates, setCoordinates ] = useState([]);
-    console.log(selected, 'testing');
+
     const [ info, setInfo ] = useState(false)
     const target = useRef(null);
     
@@ -25,14 +25,13 @@ const Suggestions = ({ data, mapRef, selected , setSelected, clearSuggestions })
     const handleInfo = () => {
         setInfo(!info);
     }
-    
+
     const handleSelect = (id, description) =>{
         let searched = data.filter(el => el.place_id  === id)[0]
         let unique = selected.some(el => el.place_id === id)
         if (!unique) {
             setSelected((current) => {
                return  [ searched, ...current]
-    
             });
         }
 

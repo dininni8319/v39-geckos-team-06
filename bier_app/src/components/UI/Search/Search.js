@@ -9,10 +9,11 @@ const Search = ({ mapRef }) => {
     const [ selected, setSelected ] = useState([]);
      
     const local = useGeolocation();
-    const handleRemove = (id) => {
-        
+    const handleRemoveCard = (id) => {
+        let removed = selected.filter(el => el.place_id !== id)
+        setSelected(removed)
     }
-    
+
     const {
         ready, 
         value, 
@@ -51,7 +52,11 @@ const Search = ({ mapRef }) => {
             <section className='card-section col-12'>
                 <div>
                     {
-                        selected?.map((item, id) => <Card selected={item} key={id}/>) 
+                        selected?.map((item, id) => <Card 
+                            selected={item} 
+                            key={id}
+                            handleRemoveCard={handleRemoveCard}
+                        />) 
                     }
                 </div>
             </section>

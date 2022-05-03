@@ -52,7 +52,7 @@ const Map = () => {
 
   return (
     <section className='d-flex'>
-      <h2 className='h1'>Beer{" "}<span role="img" aria-label='tent'>🍺</span></h2>
+      <h2 className='h1'>Beer App{" "}<span role="img" aria-label='tent'>🍺</span></h2>
       <GoogleMap 
         mapContainerStyle={mapContainerStyle}
         zoom={13}
