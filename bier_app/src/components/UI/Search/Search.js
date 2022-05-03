@@ -2,6 +2,7 @@ import { useState } from 'react';
 import usePlacesAutocomplete from "use-places-autocomplete";
 import './Search.css';
 import Suggestions from './Suggestions';
+import Card from './../Card/Card';
 import useGeolocation from '../../Hooks/useGeolocation';
 
 const Search = ({ mapRef }) => {
@@ -42,6 +43,12 @@ const Search = ({ mapRef }) => {
                     selected={selected}
                     setSelected={setSelected}
                 />
+                
+            </section>
+            <section className='card-section'>
+               {
+                   selected.description && <Card />
+               }
             </section>
         </section>
     );

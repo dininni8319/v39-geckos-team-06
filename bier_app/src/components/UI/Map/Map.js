@@ -19,6 +19,7 @@ import Search from '../Search/Search';
 const Map = () => {
   const [ markers, setMarkers ] = useState([]);
   const [ selected, setSelected ] = useState(null);
+  
   const mapRef = useRef();
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: api_key,
@@ -50,8 +51,8 @@ const Map = () => {
   if (!isLoaded) return "Error loading maps";
 
   return (
-    <>
-      <h1 className='h1'>Beer{" "}<span role="img" aria-label='tent'>🍺</span></h1>
+    <section className='d-flex'>
+      <h2 className='h1'>Beer{" "}<span role="img" aria-label='tent'>🍺</span></h2>
       <GoogleMap 
         mapContainerStyle={mapContainerStyle}
         zoom={13}
@@ -103,10 +104,9 @@ const Map = () => {
           <p>Time selected place: {formatRelative(selected.time, new Date())}</p>
         </div>
        </InfoWindow>) : null }
-
       </GoogleMap>
 
-    </>
+    </section>
   );
 }
 

@@ -7,14 +7,13 @@ import {
     Marker,
     InfoWindow,
   } from "@react-google-maps/api";
-
 import { getGeocode, getLatLng } from 'use-places-autocomplete';
 import PopOver from '../PopOver/PopOver';
 import './Search.css';
 
 const Suggestions = ({ data, mapRef, selected , setSelected, clearSuggestions }) => {
     const [coordinates, setCoordinates ] = useState([]);
-    
+    console.log(coordinates.structured_formatting?.main_text);
     const [ info, setInfo ] = useState(false)
     const target = useRef(null);
     
@@ -23,9 +22,12 @@ const Suggestions = ({ data, mapRef, selected , setSelected, clearSuggestions })
     const handleShow = (event) => {
         setShow(!show)
     }
-    
+    const handleInfo = () => {
+        setInfo(!info);
+    }
     const handleSelect = (id, description) =>{
         let searched = data.filter(el => el.place_id  === id)
+        console.log(searched, 'testing the searxched');
         setSelected(searched);
 
         getGeocode({ address: description })
@@ -44,8 +46,7 @@ const Suggestions = ({ data, mapRef, selected , setSelected, clearSuggestions })
             .catch(error => {
                 console.log("error:", error);
             })
-            setShow(!show)
-            
+            setShow(!show)   
     }
 
     const panFunction = useCallback(( lat, lng) => {
@@ -71,7 +72,8 @@ const Suggestions = ({ data, mapRef, selected , setSelected, clearSuggestions })
                 target={target}
             />  
             {coordinates.lat && coordinates.lng && <Marker
-                        position={coordinates} 
+                        position={coordinates}
+                        onClick={() =>  handleInfo()} 
                         icon={
                             {
                             url: 'red-pointer.png',
@@ -82,14 +84,14 @@ const Suggestions = ({ data, mapRef, selected , setSelected, clearSuggestions })
                         }
                     />
           }
-           {coordinates.lat && (<InfoWindow 
+           {info && (<InfoWindow 
                 position={coordinates} 
                 onCloseClick={() => {
-                
+                    handleInfo()
             }}> 
                 <div>
-                <h3>{coordinates.description}</h3>
-                <p>Time selected place: </p>
+                    <h6>{coordinates.description.slice(0,20)}</h6>
+                    
                 </div>
             </InfoWindow>)}
 
