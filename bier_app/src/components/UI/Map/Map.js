@@ -29,6 +29,7 @@ const options = {
 let api_key = process.env.REACT_APP_API_GOOGLE_MAPS_API_KEY;
 
 const Map = () => {
+
   const location = useGeolocation();
 
   const center = {
@@ -65,9 +66,6 @@ const Map = () => {
   return (
     <>
       <h1 className='h1'>Beer{" "}<span role="img" aria-label='tent'>🍺</span></h1>
-      <Search 
-        mapRef={mapRef}
-      />
       <GoogleMap 
         mapContainerStyle={mapContainerStyle}
         zoom={13}
@@ -76,12 +74,15 @@ const Map = () => {
         onClick={onMapClick}
         onLoad={onMapLoad}
       >
+      <Search 
+        mapRef={mapRef}
+      />
        {center.lat && center.lng && <Marker 
            position={center} 
            icon={
             {
-              url: 'location.jpeg',
-              scaledSize: new window.google.maps.Size(30, 30),
+              url: 'blue-pointer.png',
+              scaledSize: new window.google.maps.Size(60, 60),
               origin: new window.google.maps.Point(0,0),
               anchor: new window.google.maps.Point(15, 15)
             }
@@ -105,7 +106,7 @@ const Map = () => {
         }}
       />)}
       
-      {/* inofwindow is a component that pops out */}
+      {/* infowindow is a component that pops out */}
        {selected ? (<InfoWindow 
          position={{lat: selected.lat, lng: selected.lng}} 
          onCloseClick={() => {
@@ -116,6 +117,7 @@ const Map = () => {
           <p>Time selected place: {formatRelative(selected.time, new Date())}</p>
         </div>
        </InfoWindow>) : null }
+
       </GoogleMap>
 
     </>

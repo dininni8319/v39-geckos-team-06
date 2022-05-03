@@ -1,8 +1,9 @@
 import React from 'react';
 import usePlacesAutocomplete from "use-places-autocomplete";
 import './Search.css';
-import Suggestions from './Overlay';
+import Suggestions from './Suggestions';
 import useGeolocation from '../../Hooks/useGeolocation';
+
 const Search = ({ mapRef }) => {
     const local = useGeolocation();
 
