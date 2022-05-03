@@ -13,7 +13,7 @@ import './Search.css';
 
 const Suggestions = ({ data, mapRef, selected , setSelected, clearSuggestions }) => {
     const [coordinates, setCoordinates ] = useState([]);
-    console.log(coordinates.structured_formatting?.main_text);
+    console.log(selected, 'testing');
     const [ info, setInfo ] = useState(false)
     const target = useRef(null);
     
@@ -25,10 +25,16 @@ const Suggestions = ({ data, mapRef, selected , setSelected, clearSuggestions })
     const handleInfo = () => {
         setInfo(!info);
     }
+    
     const handleSelect = (id, description) =>{
-        let searched = data.filter(el => el.place_id  === id)
-        console.log(searched, 'testing the searxched');
-        setSelected(searched);
+        let searched = data.filter(el => el.place_id  === id)[0]
+        let unique = selected.some(el => el.place_id === id)
+        if (!unique) {
+            setSelected((current) => {
+               return  [ searched, ...current]
+    
+            });
+        }
 
         getGeocode({ address: description })
             .then(results => getLatLng(results[0]))
@@ -90,8 +96,7 @@ const Suggestions = ({ data, mapRef, selected , setSelected, clearSuggestions })
                     handleInfo()
             }}> 
                 <div>
-                    <h6>{coordinates.description.slice(0,20)}</h6>
-                    
+                    <h6>{coordinates.description.slice(0,20)}</h6>  
                 </div>
             </InfoWindow>)}
 
