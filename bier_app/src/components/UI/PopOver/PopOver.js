@@ -10,8 +10,7 @@ const PopOver = ( { data, handleSelect, handleShow, target }) => {
                 {
                     position: 'absolute',
                     marginTop: '56px',
-                }
-            
+                }  
         }>
 
             <section
@@ -26,7 +25,6 @@ const PopOver = ( { data, handleSelect, handleShow, target }) => {
                                 onClick={() => {
                                     handleSelect(place_id, description)
                                 }}
-
                                 key={id}     
                                 value={description}
                                 style={{

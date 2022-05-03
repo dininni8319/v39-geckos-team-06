@@ -1,49 +1,36 @@
-import { useCallback, useRef, useState, useEffect } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import '../../../App.css';
 import {
   GoogleMap, 
   useLoadScript,
   Marker,
-  infoWindow,
   InfoWindow,
 } from "@react-google-maps/api";
 import { formatRelative } from "date-fns";
-import mapStyles from './mapStyles';
-import Search from '../Search/Search';
+import { 
+  mapContainerStyle, 
+  options, 
+  api_key, 
+  libraries
+} from './utilities';
 import useGeolocation from '../../Hooks/useGeolocation';
-
-const libraries = ['places'];
-
-const mapContainerStyle = {
-  width: '100vw',
-  height: '100vh',
-  borderRadius: '5px',
-}
-
-const options = {
-  styles: mapStyles,
-  disableDefaultUI: true,
-  zoomControll: true,
-}
-
-let api_key = process.env.REACT_APP_API_GOOGLE_MAPS_API_KEY;
+import Search from '../Search/Search';
 
 const Map = () => {
-
+  const [ markers, setMarkers ] = useState([]);
+  const [ selected, setSelected ] = useState(null);
+  
+  const { isLoaded, loadError } = useLoadScript({
+    googleMapsApiKey: api_key,
+    libraries,
+  })
+  
   const location = useGeolocation();
 
   const center = {
     lat: location.coordinates.lat,
     lng: location.coordinates.lng
   };
-
-  const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: api_key,
-    libraries,
-  })
-  
-  const [ markers, setMarkers ] = useState([]);
-  const [ selected, setSelected ] = useState(null);
 
   const onMapClick = useCallback((event) => {
 

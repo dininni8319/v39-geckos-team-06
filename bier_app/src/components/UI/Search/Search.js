@@ -1,10 +1,12 @@
-import React from 'react';
+import { useState } from 'react';
 import usePlacesAutocomplete from "use-places-autocomplete";
 import './Search.css';
 import Suggestions from './Suggestions';
 import useGeolocation from '../../Hooks/useGeolocation';
 
 const Search = ({ mapRef }) => {
+    const [ selected, setSelected ] = useState([]);
+
     const local = useGeolocation();
 
     const {
@@ -17,7 +19,7 @@ const Search = ({ mapRef }) => {
         requestOptions: {
             location: {lat:() => local.coordinates.lat, lng: () => local.coordinates.lng },
             radius: 50000,
-            types: ['restaurant', 'bar', 'cafe', ]
+            types: ['restaurant', 'bar', 'cafe']
         }
     });
 
@@ -37,6 +39,8 @@ const Search = ({ mapRef }) => {
                     data={data}
                     mapRef={mapRef}
                     clearSuggestions={clearSuggestions}
+                    selected={selected}
+                    setSelected={setSelected}
                 />
             </section>
         </section>

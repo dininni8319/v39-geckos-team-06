@@ -13,9 +13,8 @@ import { getGeocode, getLatLng } from 'use-places-autocomplete';
 import PopOver from '../PopOver/PopOver';
 import './Search.css';
 
-const Suggestions = ({ data, mapRef, clearSuggestions }) => {
+const Suggestions = ({ data, mapRef,selected , setSelected, clearSuggestions }) => {
 
-    const [ selected, setSelected ] = useState([]);
     const [coordinates, setCoordinates ] = useState([]);
 
     const target = useRef(null);
@@ -37,6 +36,7 @@ const Suggestions = ({ data, mapRef, clearSuggestions }) => {
                     lat: lat,
                     lng: lng,
                 })
+
                 panFunction(lat, lng);
                 
                 clearSuggestions(null)
@@ -75,15 +75,13 @@ const Suggestions = ({ data, mapRef, clearSuggestions }) => {
                         icon={
                             {
                             url: 'red-pointer.png',
-                            scaledSize: new window.google.maps.Size(20, 20),
+                            scaledSize: new window.google.maps.Size(25, 25),
                             origin: new window.google.maps.Point(0,0),
                             anchor: new window.google.maps.Point(15, 15)
                             }
                         }
                     />
-
-          } 
-
+          }
         </>
         </OverlayTrigger> 
          
