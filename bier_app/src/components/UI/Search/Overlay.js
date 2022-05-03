@@ -1,7 +1,7 @@
 import { set } from 'date-fns';
 import { useCallback, useRef, useState } from 'react';
 import { Overlay, OverlayTrigger} from 'react-bootstrap';
-import { getGeocode, getLatLng, usePlacesAutocomplete, clearSuggestions,  } from 'use-places-autocomplete';
+import { getGeocode, getLatLng } from 'use-places-autocomplete';
 import PopOver from '../PopOver/PopOver';
 import './Search.css';
 
@@ -34,7 +34,7 @@ const Suggestions = ({ data, mapRef, clearSuggestions }) => {
 
     const panFunction = useCallback(( lat, lng) => {
         mapRef.current.panTo({ lat, lng})
-        mapRef.current.setZoom(14)
+        mapRef.current.setZoom(16)
     })
 
     return ( 

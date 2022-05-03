@@ -2,8 +2,9 @@ import React from 'react';
 import usePlacesAutocomplete from "use-places-autocomplete";
 import './Search.css';
 import Suggestions from './Overlay';
-
+import useGeolocation from '../../Hooks/useGeolocation';
 const Search = ({ mapRef }) => {
+    const local = useGeolocation();
 
     const {
         ready, 
@@ -13,8 +14,9 @@ const Search = ({ mapRef }) => {
         clearSuggestions, 
     } = usePlacesAutocomplete({
         requestOptions: {
-            location: {lat:() => 40.7128, lng: () => -74.0060},
-            radius: 2 * 50,
+            location: {lat:() => local.coordinates.lat, lng: () => local.coordinates.lng },
+            radius: 50000,
+            types: ['restaurant', 'bar', 'cafe', ]
         }
     });
 
