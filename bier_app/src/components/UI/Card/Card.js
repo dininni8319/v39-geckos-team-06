@@ -1,6 +1,7 @@
 
 const Card = ({selected, handleRemoveCard}) => {
     
+    
     return ( 
         <section className="container-fluid">
             <div className='row p-1'>

@@ -1,6 +1,7 @@
 import mapStyles from '../../../mapStyles';
 
 export const api_key = process.env.REACT_APP_API_GOOGLE_MAPS_API_KEY;
+export const api_near_by_key = process.env.REACT_APP_API_PLACE_NEAR_BY;
 
 export const libraries = ['places'];
 

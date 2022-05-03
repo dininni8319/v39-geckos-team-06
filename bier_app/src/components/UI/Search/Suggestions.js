@@ -5,6 +5,7 @@ import {
     GoogleMap, 
     useLoadScript,
     Marker,
+    infoWindow,
     InfoWindow,
   } from "@react-google-maps/api";
 import { getGeocode, getLatLng } from 'use-places-autocomplete';
@@ -98,7 +99,6 @@ const Suggestions = ({ data, mapRef, selected , setSelected, clearSuggestions })
                     <h6>{coordinates.description.slice(0,20)}</h6>  
                 </div>
             </InfoWindow>)}
-
         </>
         
         </OverlayTrigger> 

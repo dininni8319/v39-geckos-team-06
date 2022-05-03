@@ -1,18 +1,35 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import usePlacesAutocomplete from "use-places-autocomplete";
 import './Search.css';
 import Suggestions from './Suggestions';
 import Card from './../Card/Card';
 import useGeolocation from '../../Hooks/useGeolocation';
+import { api_key, api_near_by_key } from '../Map/utilities';
 
 const Search = ({ mapRef }) => {
     const [ selected, setSelected ] = useState([]);
      
     const local = useGeolocation();
+    
     const handleRemoveCard = (id) => {
         let removed = selected.filter(el => el.place_id !== id)
         setSelected(removed)
     }
+
+    const url = `https://trueway-places.p.rapidapi.com/FindPlacesNearby/`
+
+    useEffect(() => {
+       fetch(`${url}`, {
+            method: 'GET',
+            params: {location: `${local.loaded ? local.lat : null},${local.loaded ? local.lng : null}`, type: 'cafe', radius: '150', language: 'en'},
+            headers: {
+            'X-RapidAPI-Host': 'trueway-places.p.rapidapi.com',
+            'X-RapidAPI-Key': `${api_near_by_key}`
+            }
+      })
+        .then(resp => console.log(resp))
+        .then(data => console.log(data, 'testing'))
+    }, [])
 
     const {
         ready, 
