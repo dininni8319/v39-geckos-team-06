@@ -19,7 +19,7 @@ import Search from '../Search/Search';
 const Map = () => {
   const [ markers, setMarkers ] = useState([]);
   const [ selected, setSelected ] = useState(null);
-  
+  const mapRef = useRef();
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: api_key,
     libraries,
@@ -42,7 +42,6 @@ const Map = () => {
     }])
   }, []);
 
-  const mapRef = useRef();
   const onMapLoad = useCallback((map) => {
     mapRef.current = map;
   })

@@ -5,7 +5,6 @@ import {
     GoogleMap, 
     useLoadScript,
     Marker,
-    infoWindow,
     InfoWindow,
   } from "@react-google-maps/api";
 
@@ -13,10 +12,10 @@ import { getGeocode, getLatLng } from 'use-places-autocomplete';
 import PopOver from '../PopOver/PopOver';
 import './Search.css';
 
-const Suggestions = ({ data, mapRef,selected , setSelected, clearSuggestions }) => {
-
+const Suggestions = ({ data, mapRef, selected , setSelected, clearSuggestions }) => {
     const [coordinates, setCoordinates ] = useState([]);
-
+    
+    const [ info, setInfo ] = useState(false)
     const target = useRef(null);
     
     const [ show, setShow ] = useState(true);
@@ -35,6 +34,7 @@ const Suggestions = ({ data, mapRef,selected , setSelected, clearSuggestions }) 
                 setCoordinates  ({
                     lat: lat,
                     lng: lng,
+                    description: description
                 })
 
                 panFunction(lat, lng);
@@ -82,7 +82,19 @@ const Suggestions = ({ data, mapRef,selected , setSelected, clearSuggestions }) 
                         }
                     />
           }
+           {coordinates.lat && (<InfoWindow 
+                position={coordinates} 
+                onCloseClick={() => {
+                
+            }}> 
+                <div>
+                <h3>{coordinates.description}</h3>
+                <p>Time selected place: </p>
+                </div>
+            </InfoWindow>)}
+
         </>
+        
         </OverlayTrigger> 
          
      );

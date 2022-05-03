@@ -1,4 +1,4 @@
-import mapStyles from './mapStyles';
+import mapStyles from '../../../mapStyles';
 
 export const api_key = process.env.REACT_APP_API_GOOGLE_MAPS_API_KEY;
 
