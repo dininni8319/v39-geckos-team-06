@@ -22,7 +22,7 @@ const Search = ({ mapRef }) => {
         <section className="search">
             <section>
                 <input 
-                    className='mb-5'
+                    className='mb-5 outline-none input-search'
                     value={value} 
                     onChange={(e) => {
                       setValue(e.target.value)

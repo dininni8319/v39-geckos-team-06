@@ -5,7 +5,7 @@ import { getGeocode, getLatLng, usePlacesAutocomplete, clearSuggestions,  } from
 import PopOver from '../PopOver/PopOver';
 import './Search.css';
 
-const Suggestions = ({ data, mapRef, clearSuggestions}) => {
+const Suggestions = ({ data, mapRef, clearSuggestions }) => {
 
     const [ selected, setSelected ] = useState([]);
     const target = useRef(null);

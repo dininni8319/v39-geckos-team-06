@@ -76,7 +76,7 @@ const Map = () => {
         onClick={onMapClick}
         onLoad={onMapLoad}
       >
-        <Marker 
+       {center.lat && center.lng && <Marker 
            position={center} 
            icon={
             {
@@ -87,7 +87,7 @@ const Map = () => {
             }
           }
         />
-      
+      }
 
       {markers.map(marker => <Marker 
         key={marker.time.toISOString()} 

@@ -1,13 +1,17 @@
 import { Popover } from 'react-bootstrap';
+import './../Search/Search.css';
 
 const PopOver = ( { data, handleSelect, handleShow, target }) => {
    
     return ( 
-        <Popover id={`Popover-positioned-bottom`} style={
-            {
-                position: 'absolute',
-                marginTop: '56px',
-            }
+        <Popover id={`Popover-positioned-bottom`}
+            className='tooltip.top tooltip-arrow'
+            style={
+                {
+                    position: 'absolute',
+                    marginTop: '56px',
+                }
+            
         }>
 
             <section
@@ -17,7 +21,7 @@ const PopOver = ( { data, handleSelect, handleShow, target }) => {
                 }}
                 >
                     {data?.map(({id, description, place_id }) => 
-                        <option 
+                        <Popover.Body 
                                 ref={target}
                                 onClick={() => {
                                     handleSelect(place_id, description)
@@ -30,7 +34,7 @@ const PopOver = ( { data, handleSelect, handleShow, target }) => {
                                 }}
                         >
                           {description.slice(0,50)}
-                        </option>
+                        </Popover.Body>
     
                     )}
             </section>
