@@ -12,7 +12,6 @@ const PopOver = ( { data, handleSelect, handleShow, target }) => {
                     marginTop: '56px',
                 }  
         }>
-
             <section
                 style={{
                     width: '25rem',

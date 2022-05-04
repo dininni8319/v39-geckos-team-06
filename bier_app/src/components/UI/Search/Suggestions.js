@@ -11,7 +11,6 @@ import './Search.css';
 
 const Suggestions = ({ data, mapRef, selected , setSelected, clearSuggestions, setValue, panFunction, setMarkers}) => {
     const [coordinates, setCoordinates ] = useState([]);
-     console.log(coordinates, 'test');
     const [ info, setInfo ] = useState(false)
     const target = useRef(null);
     
@@ -59,7 +58,6 @@ const Suggestions = ({ data, mapRef, selected , setSelected, clearSuggestions, s
             })
             setShow(!show)   
     }
-
     return ( 
         <OverlayTrigger
             show={show}
@@ -98,14 +96,12 @@ const Suggestions = ({ data, mapRef, selected , setSelected, clearSuggestions, s
                                 <button onClick={(e) => {
                                     e.preventDefault()
                                     handleLocation(coordinates)
-                                }} className='btn btn-info'>Create a meet app point</button>  
+                                }} className='btn btn-info'>Create a Meetup</button>  
                             </>
                     </InfoWindow>)}
             </Marker>
           }
-
-        </>
-        
+        </> 
         </OverlayTrigger> 
          
      );
