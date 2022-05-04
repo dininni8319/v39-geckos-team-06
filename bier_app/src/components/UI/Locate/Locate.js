@@ -7,7 +7,7 @@ const Locate = ({ panFunction }) => {
     return ( 
         <button className='locate' onClick={() => panFunction(
             location.coordinates.lat, location.coordinates.lng)}>
-            <img src='compass.png' alt="Compass" width='75px' height='75px'/>
+            <img src='compass.png' alt="Compass" width='50px' height='50px'/>
         </button>
      );
 }

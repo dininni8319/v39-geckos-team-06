@@ -9,9 +9,9 @@ import { getGeocode, getLatLng } from 'use-places-autocomplete';
 import PopOver from '../PopOver/PopOver';
 import './Search.css';
 
-const Suggestions = ({ data, mapRef, selected , setSelected, clearSuggestions, setValue, panFunction}) => {
+const Suggestions = ({ data, mapRef, selected , setSelected, clearSuggestions, setValue, panFunction, setMarkers}) => {
     const [coordinates, setCoordinates ] = useState([]);
-
+     console.log(coordinates, 'test');
     const [ info, setInfo ] = useState(false)
     const target = useRef(null);
     
@@ -21,9 +21,15 @@ const Suggestions = ({ data, mapRef, selected , setSelected, clearSuggestions, s
         setShow(!show)
     }
     const handleInfo = () => {
+
         setInfo(!info);
     }
-
+    const handleLocation = (marker) => {
+        
+        setMarkers([marker])
+        setCoordinates(null)
+        panFunction(marker.lat, marker.lng)
+    }
     const handleSelect = (id, description) =>{
         setValue(description, false)
 
@@ -41,7 +47,8 @@ const Suggestions = ({ data, mapRef, selected , setSelected, clearSuggestions, s
                 setCoordinates  ({
                     lat: lat,
                     lng: lng,
-                    description: description
+                    description: description,
+                    time: new Date()
                 })
 
                 panFunction(lat, lng);
@@ -70,7 +77,7 @@ const Suggestions = ({ data, mapRef, selected , setSelected, clearSuggestions, s
                 handleShow={handleShow}
                 target={target}
             />  
-            {coordinates.lat && coordinates.lng && <Marker
+            {coordinates?.lat && <Marker
                         position={coordinates}
                         onClick={() =>  handleInfo()} 
                         icon={
@@ -86,10 +93,17 @@ const Suggestions = ({ data, mapRef, selected , setSelected, clearSuggestions, s
                             position={coordinates} 
                             opacity={1}
                             > 
-                            <h6>{coordinates.description.slice(0,20)}</h6>  
+                            <>
+                                <h6>{coordinates.description.slice(0,20)}</h6>
+                                <button onClick={(e) => {
+                                    e.preventDefault()
+                                    handleLocation(coordinates)
+                                }} className='btn btn-info'>Create a meet app point</button>  
+                            </>
                     </InfoWindow>)}
             </Marker>
           }
+
         </>
         
         </OverlayTrigger> 

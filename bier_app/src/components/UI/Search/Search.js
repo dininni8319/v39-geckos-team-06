@@ -6,7 +6,7 @@ import Card from './../Card/Card';
 import useGeolocation from '../../Hooks/useGeolocation';
 import { api_key, api_near_by_key } from '../Map/utilities';
 
-const Search = ({ mapRef, panFunction }) => {
+const Search = ({ mapRef, panFunction, setMarkers}) => {
 
     const [ selected, setSelected ] = useState([]);
      
@@ -56,6 +56,7 @@ const Search = ({ mapRef, panFunction }) => {
                     setSelected={setSelected}
                     setValue={setValue}
                     panFunction={panFunction}
+                    setMarkers={setMarkers}
                 />
 
             </section>

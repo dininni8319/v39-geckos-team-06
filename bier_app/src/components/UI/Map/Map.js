@@ -19,6 +19,7 @@ import Location from './../Locate/Locate';
 
 const Map = () => {
   const [ markers, setMarkers ] = useState([]);
+
   const [ selected, setSelected ] = useState(null);
   
   const mapRef = useRef();
@@ -57,7 +58,7 @@ const Map = () => {
 
   return (
     <section className='d-flex'>
-      <h2 className='h1'>Beer App{" "}<span role="img" aria-label='tent'>🍺</span></h2>
+      <h3 className='h1'>Beer App{" "}<span role="img" aria-label='tent'>🍺</span></h3>
       <GoogleMap 
         mapContainerStyle={mapContainerStyle}
         zoom={13}
@@ -69,21 +70,9 @@ const Map = () => {
       <Search 
         mapRef={mapRef}
         panFunction={panFunction}
+        setMarkers={setMarkers}
       />
 
-      {/* My location  */}
-       {center.lat && center.lng && <Marker 
-           position={center} 
-           icon={
-            {
-              url: 'blue-pointer.png',
-              scaledSize: new window.google.maps.Size(60, 60),
-              origin: new window.google.maps.Point(0,0),
-              anchor: new window.google.maps.Point(15, 15)
-            }
-          }
-        />
-      }
 
       {markers.map(marker => <Marker 
         key={marker.time.toISOString()} 
@@ -99,7 +88,22 @@ const Map = () => {
         onClick={() => {
           setSelected(marker);
         }}
-      />)}
+        />)}
+
+        {/* My location  */}
+         {center.lat && center.lng && <Marker 
+             position={center} 
+             icon={
+              {
+                url: 'blue-pointer.png',
+                scaledSize: new window.google.maps.Size(60, 60),
+                origin: new window.google.maps.Point(0,0),
+                anchor: new window.google.maps.Point(15, 15)
+              }
+            }
+          />
+        }
+      <Location panFunction={panFunction} />
       
       {/* infowindow is a component that pops out */}
        {selected ? (<InfoWindow 
@@ -109,9 +113,9 @@ const Map = () => {
        }}> 
         <div>
           <h3>Meetup place</h3>
+          <p>{selected.description}</p>
         </div>
        </InfoWindow>) : null }
-       <Location panFunction={panFunction} />
       </GoogleMap>
 
     </section>
