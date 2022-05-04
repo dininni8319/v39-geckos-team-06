@@ -33,15 +33,14 @@ const Map = () => {
     lng: location.coordinates.lng
   };
 
-  const onMapClick = useCallback((event) => {
+  // const onMapClick = useCallback((event) => {
+  //   setMarkers(current => [...current, {
+  //     lat: event.latLng.lat(),
+  //     lng: event.latLng.lng(),
+  //     time: new Date(),
 
-    setMarkers(current => [...current, {
-      lat: event.latLng.lat(),
-      lng: event.latLng.lng(),
-      time: new Date(),
-
-    }])
-  }, []);
+  //   }])
+  // }, []);
 
   const onMapLoad = useCallback((map) => {
     mapRef.current = map;
@@ -58,7 +57,7 @@ const Map = () => {
         zoom={13}
         center={center}
         options={options}
-        onClick={onMapClick}
+        // onClick={onMapClick}
         onLoad={onMapLoad}
       >
       <Search 
@@ -94,7 +93,7 @@ const Map = () => {
       />)}
       
       {/* infowindow is a component that pops out */}
-       {selected ? (<InfoWindow 
+       {/* {selected ? (<InfoWindow 
          position={{lat: selected.lat, lng: selected.lng}} 
          onCloseClick={() => {
          setSelected(null)
@@ -103,7 +102,7 @@ const Map = () => {
           <h3>Meetup place</h3>
           <p>Time selected place: {formatRelative(selected.time, new Date())}</p>
         </div>
-       </InfoWindow>) : null }
+       </InfoWindow>) : null } */}
       </GoogleMap>
 
     </section>

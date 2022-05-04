@@ -15,4 +15,4 @@ export const options = {
     styles: mapStyles,
     disableDefaultUI: true,
     zoomControll: true,
-  }
+}

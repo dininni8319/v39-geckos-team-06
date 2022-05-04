@@ -15,22 +15,7 @@ const Search = ({ mapRef }) => {
         let removed = selected.filter(el => el.place_id !== id)
         setSelected(removed)
     }
-
-    const url = `https://trueway-places.p.rapidapi.com/FindPlacesNearby/`
-
-    useEffect(() => {
-       fetch(`${url}`, {
-            method: 'GET',
-            params: {location: `${local.loaded ? local.lat : null},${local.loaded ? local.lng : null}`, type: 'cafe', radius: '150', language: 'en'},
-            headers: {
-            'X-RapidAPI-Host': 'trueway-places.p.rapidapi.com',
-            'X-RapidAPI-Key': `${api_near_by_key}`
-            }
-      })
-        .then(resp => console.log(resp))
-        .then(data => console.log(data, 'testing'))
-    }, [])
-
+     
     const {
         ready, 
         value, 
@@ -45,6 +30,11 @@ const Search = ({ mapRef }) => {
         }
     });
 
+    const request = {
+        placeId: selected.place_id,
+        fields: ['name', "formatted_address", "place_id", "geometry"]
+    };
+    
     return (
         <section className="search">
             <section>

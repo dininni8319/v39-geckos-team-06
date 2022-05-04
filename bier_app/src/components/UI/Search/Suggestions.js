@@ -2,10 +2,7 @@ import { set } from 'date-fns';
 import { useCallback, useRef, useState } from 'react';
 import { OverlayTrigger} from 'react-bootstrap';
 import {
-    GoogleMap, 
-    useLoadScript,
     Marker,
-    infoWindow,
     InfoWindow,
   } from "@react-google-maps/api";
 import { getGeocode, getLatLng } from 'use-places-autocomplete';
@@ -88,17 +85,17 @@ const Suggestions = ({ data, mapRef, selected , setSelected, clearSuggestions })
                             anchor: new window.google.maps.Point(15, 15)
                             }
                         }
-                    />
+                    > 
+                    {info && (<InfoWindow 
+                            position={coordinates} 
+                            opacity={1}
+                            onCloseClick={() => {
+                                handleInfo()
+                        }}> 
+                            <h6>{coordinates.description.slice(0,20)}</h6>  
+                    </InfoWindow>)}
+            </Marker>
           }
-           {info && (<InfoWindow 
-                position={coordinates} 
-                onCloseClick={() => {
-                    handleInfo()
-            }}> 
-                <div>
-                    <h6>{coordinates.description.slice(0,20)}</h6>  
-                </div>
-            </InfoWindow>)}
         </>
         
         </OverlayTrigger> 

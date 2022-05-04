@@ -12,3 +12,21 @@ And before we go there's "one more thing"! Once you decide what to include
 in your `readme` feel free to replace the text we've provided here.
 
 > Own it & Make it your Own!
+Title: Beer App
+
+Description: Beer app enable user to search beers and places to meet and enjoy.
+
+Websites
+https://snazzymaps.com/
+
+Packages:
+- React
+- React Bootstrap
+- Google Map API
+- Google Map Places API
+- Google Map Geocoding
+- Google Map Geolocation
+- use-places-autocomplete
+- bootstrap
+
+
