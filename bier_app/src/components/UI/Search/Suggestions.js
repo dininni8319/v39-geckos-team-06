@@ -1,5 +1,5 @@
 import { set } from 'date-fns';
-import { useCallback, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { OverlayTrigger} from 'react-bootstrap';
 import {
     Marker,
@@ -9,7 +9,7 @@ import { getGeocode, getLatLng } from 'use-places-autocomplete';
 import PopOver from '../PopOver/PopOver';
 import './Search.css';
 
-const Suggestions = ({ data, mapRef, selected , setSelected, clearSuggestions }) => {
+const Suggestions = ({ data, mapRef, selected , setSelected, clearSuggestions, setValue, panFunction}) => {
     const [coordinates, setCoordinates ] = useState([]);
 
     const [ info, setInfo ] = useState(false)
@@ -25,6 +25,8 @@ const Suggestions = ({ data, mapRef, selected , setSelected, clearSuggestions })
     }
 
     const handleSelect = (id, description) =>{
+        setValue(description, false)
+
         let searched = data.filter(el => el.place_id  === id)[0]
         let unique = selected.some(el => el.place_id === id)
         if (!unique) {
@@ -43,7 +45,6 @@ const Suggestions = ({ data, mapRef, selected , setSelected, clearSuggestions })
                 })
 
                 panFunction(lat, lng);
-                
                 clearSuggestions(null)
             })
             .catch(error => {
@@ -51,11 +52,6 @@ const Suggestions = ({ data, mapRef, selected , setSelected, clearSuggestions })
             })
             setShow(!show)   
     }
-
-    const panFunction = useCallback(( lat, lng) => {
-        mapRef.current.panTo({ lat, lng})
-        mapRef.current.setZoom(16)
-    })
 
     return ( 
         <OverlayTrigger
@@ -89,9 +85,7 @@ const Suggestions = ({ data, mapRef, selected , setSelected, clearSuggestions })
                     {info && (<InfoWindow 
                             position={coordinates} 
                             opacity={1}
-                            onCloseClick={() => {
-                                handleInfo()
-                        }}> 
+                            > 
                             <h6>{coordinates.description.slice(0,20)}</h6>  
                     </InfoWindow>)}
             </Marker>

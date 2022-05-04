@@ -21,3 +21,12 @@
 .tooltip-arrow {
     color: transparent !important;
 }
+
+.locate {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: none;
+    border: none;
+    z-index: 100;
+}

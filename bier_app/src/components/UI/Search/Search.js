@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import usePlacesAutocomplete from "use-places-autocomplete";
 import './Search.css';
 import Suggestions from './Suggestions';
@@ -6,7 +6,8 @@ import Card from './../Card/Card';
 import useGeolocation from '../../Hooks/useGeolocation';
 import { api_key, api_near_by_key } from '../Map/utilities';
 
-const Search = ({ mapRef }) => {
+const Search = ({ mapRef, panFunction }) => {
+
     const [ selected, setSelected ] = useState([]);
      
     const local = useGeolocation();
@@ -34,7 +35,7 @@ const Search = ({ mapRef }) => {
         placeId: selected.place_id,
         fields: ['name', "formatted_address", "place_id", "geometry"]
     };
-    
+
     return (
         <section className="search">
             <section>
@@ -53,8 +54,10 @@ const Search = ({ mapRef }) => {
                     clearSuggestions={clearSuggestions}
                     selected={selected}
                     setSelected={setSelected}
+                    setValue={setValue}
+                    panFunction={panFunction}
                 />
-                
+
             </section>
             <section className='card-section col-12'>
                 <div>
@@ -67,6 +70,7 @@ const Search = ({ mapRef }) => {
                     }
                 </div>
             </section>
+            
         </section>
     );
 }

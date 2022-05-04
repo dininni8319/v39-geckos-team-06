@@ -15,6 +15,7 @@ import {
 } from './utilities';
 import useGeolocation from '../../Hooks/useGeolocation';
 import Search from '../Search/Search';
+import Location from './../Locate/Locate';
 
 const Map = () => {
   const [ markers, setMarkers ] = useState([]);
@@ -26,6 +27,11 @@ const Map = () => {
     libraries,
   })
   
+  const panFunction = useCallback(( lat, lng) => {
+    mapRef.current.panTo({ lat, lng})
+    mapRef.current.setZoom(16)
+  })
+
   const location = useGeolocation();
 
   const center = {
@@ -33,14 +39,14 @@ const Map = () => {
     lng: location.coordinates.lng
   };
 
-  // const onMapClick = useCallback((event) => {
-  //   setMarkers(current => [...current, {
-  //     lat: event.latLng.lat(),
-  //     lng: event.latLng.lng(),
-  //     time: new Date(),
+  const onMapClick = useCallback((event) => {
+    setMarkers(current => [...current, {
+      lat: event.latLng.lat(),
+      lng: event.latLng.lng(),
+      time: new Date(),
 
-  //   }])
-  // }, []);
+    }])
+  }, []);
 
   const onMapLoad = useCallback((map) => {
     mapRef.current = map;
@@ -57,12 +63,15 @@ const Map = () => {
         zoom={13}
         center={center}
         options={options}
-        // onClick={onMapClick}
+        onClick={onMapClick}
         onLoad={onMapLoad}
       >
       <Search 
         mapRef={mapRef}
+        panFunction={panFunction}
       />
+
+      {/* My location  */}
        {center.lat && center.lng && <Marker 
            position={center} 
            icon={
@@ -93,16 +102,16 @@ const Map = () => {
       />)}
       
       {/* infowindow is a component that pops out */}
-       {/* {selected ? (<InfoWindow 
+       {selected ? (<InfoWindow 
          position={{lat: selected.lat, lng: selected.lng}} 
          onCloseClick={() => {
          setSelected(null)
        }}> 
         <div>
           <h3>Meetup place</h3>
-          <p>Time selected place: {formatRelative(selected.time, new Date())}</p>
         </div>
-       </InfoWindow>) : null } */}
+       </InfoWindow>) : null }
+       <Location panFunction={panFunction} />
       </GoogleMap>
 
     </section>
